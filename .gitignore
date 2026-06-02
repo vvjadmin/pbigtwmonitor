@@ -55,3 +55,112 @@ Gateway Monitor - Parameters.txt
 
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+# SECURITY: Environment files
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# SECURITY: Private keys and certificates
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# SECURITY: Secrets files
+secrets.json
+secrets.yml
+secrets.yaml
+config/secrets.yml
+credentials.json
+aws.conf
+.aws/credentials
+.docker/config.json
+kubeconfig
+.kubeconfig
+
+# SECURITY: API keys and tokens
+.apikey
+api_key.txt
+token.txt
+*.token
+
+# SECURITY: IDE and editor secrets
+.vscode/settings.local.json
+.idea/shelf/*
+*.swp
+*.swo
+*~
+.DS_Store
+.env.*.swp
+
+# SECURITY: Logs that might contain sensitive data
+*.log
+logs/
+debug/
+
+# SECURITY: OS files
+.DS_Store
+Thumbs.db
+.gitignore_EOF
+
+# SECURITY: Environment files
+.env
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+.env.test.local
+
+# SECURITY: Private keys and certificates
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# SECURITY: Secrets files
+secrets.json
+secrets.yml
+secrets.yaml
+config/secrets.yml
+credentials.json
+aws.conf
+.aws/credentials
+.docker/config.json
+kubeconfig
+.kubeconfig
+
+# SECURITY: API keys and tokens
+.apikey
+api_key.txt
+token.txt
+*.token
+
+# SECURITY: IDE and editor secrets
+.vscode/settings.local.json
+.idea/shelf/*
+*.swp
+*.swo
+*~
+.DS_Store
+.env.*.swp
+
+# SECURITY: Logs that might contain sensitive data
+*.log
+logs/
+debug/
+
+# SECURITY: OS files
+.DS_Store
+Thumbs.db
+.gitignore_EOF
