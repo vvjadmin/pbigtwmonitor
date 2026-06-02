@@ -1,0 +1,69 @@
+name: Claude Code Automation
+
+on:
+  issue_comment:
+    types: [created, edited]
+  pull_request_review_comment:
+    types: [created, edited]
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  claude-mention:
+    runs-on: ubuntu-latest
+    if: contains(github.event.comment.body, '@claude')
+    steps:
+      - name: Check if Claude was mentioned
+        id: check-mention
+        run: |
+          COMMENT_BODY="${{ github.event.comment.body }}"
+          if [[ "$COMMENT_BODY" == *"@claude"* ]]; then
+            echo "claude_mentioned=true" >> $GITHUB_OUTPUT
+            echo "request=$(echo "$COMMENT_BODY" | sed 's/@claude //g')" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Acknowledge mention
+        if: steps.check-mention.outputs.claude_mentioned == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🤖 Claude is analyzing your request...\n\nRequest: `${{ steps.check-mention.outputs.request }}`'
+            })
+
+      - uses: actions/checkout@v4
+        if: steps.check-mention.outputs.claude_mentioned == 'true'
+
+      - name: Extract and process Claude request
+        if: steps.check-mention.outputs.claude_mentioned == 'true'
+        run: |
+          echo "Request received:"
+          echo "${{ steps.check-mention.outputs.request }}"
+          echo ""
+          echo "Claude Code will analyze and execute this request"
+          echo "Context:"
+          echo "  - Repository: ${{ github.repository }}"
+          echo "  - Issue/PR: #${{ github.event.issue.number || github.event.pull_request.number }}"
+          echo "  - Author: ${{ github.event.comment.user.login }}"
+
+      - name: Claude Code Integration
+        if: steps.check-mention.outputs.claude_mentioned == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REQUEST: ${{ steps.check-mention.outputs.request }}
+          ISSUE_NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          # Claude Code integration point
+          # This is where Claude Code would:
+          # 1. Analyze the request
+          # 2. Access the codebase
+          # 3. Execute the task
+          # 4. Post results back to the issue/PR
+          echo "Claude Code execution triggered for: $REQUEST"
